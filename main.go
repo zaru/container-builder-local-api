@@ -7,6 +7,7 @@ import (
 	"os"
 	"encoding/json"
 	"github.com/labstack/echo"
+	"os/exec"
 )
 
 func main() {
@@ -39,7 +40,7 @@ func save(c echo.Context) error {
 	body, _ := ioutil.ReadAll(c.Request().Body)
 	content := []byte(string(body))
 	//TODO: cloudbuild.yamlファイルをワーキングディレクトリに出力する
-	ioutil.WriteFile("/tmp/go-file", content, os.ModePerm)
+	ioutil.WriteFile("/tmp/cloudbuild.json", content, os.ModePerm)
 	fmt.Print(string(body))
 
 	//TODO: 動的にユニークなビルドIDを適当に返す
@@ -51,7 +52,13 @@ func save(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusUnauthorized, "Please provide valid credentials")
 	}
 
-	//TODO: container-builder-localでビルドする
+	//TODO: ビルドキャンセルをどうするか検討する
+	//TODO: ワーキングディレクトリに対応する
+	out, err := exec.Command("container-builder-local", "--config=/tmp/cloudbuild.json", "--dryrun=false", "/tmp").Output()
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Print(string(out))
 
 	return c.JSON(http.StatusCreated, res)
 }

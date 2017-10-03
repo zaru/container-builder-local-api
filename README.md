@@ -17,10 +17,10 @@ curl -X POST -H 'Content-Type:application/json' \
     {
       "name": "gcr.io/cloud-builders/git",
       "entrypoint": "bash",
-      "args": "date"
+      "args": ["-c", "date"]
     }
   ],
-  "logsBucket": "hogehoge"
+  "logsBucket": "foobar"
 }' \
-http://localhost:1323/users
+http://localhost:1323/users | jq .
 ```
