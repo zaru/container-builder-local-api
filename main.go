@@ -48,7 +48,7 @@ func save(c echo.Context) error {
 	jsonResponse := `{"metadata": {"build": {"id": "` + build_id + `"}}}`
 	res := &Response{}
 	err := json.Unmarshal([]byte(jsonResponse), res)
-	if(err!=nil) {
+	if err!=nil {
 		return echo.NewHTTPError(http.StatusUnauthorized, "Please provide valid credentials")
 	}
 
