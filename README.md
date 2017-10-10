@@ -4,15 +4,15 @@ GCP container-builder-local REST API mock server.
 
 🚧 This repository is under development.
 
-```
-dep ensure
-```
+### Installation
 
-```
-godo server --watch
-```
+[Download binary](https://github.com/zaru/container-builder-local-api/releases)
 
 ### Usage
+
+```
+./container-builder-local-api
+```
 
 ```
 curl -X POST -H 'Content-Type:application/json' \
@@ -26,5 +26,18 @@ curl -X POST -H 'Content-Type:application/json' \
   ],
   "logsBucket": "foobar"
 }' \
-http://localhost:1323/users | jq .
+http://localhost:1323/v1/projects/example-prj/builds | jq .
+```
+
+- ref: https://cloud.google.com/container-builder/docs/api/reference/rest/v1/projects.builds/create
+
+
+### Development
+
+```
+dep ensure
+```
+
+```
+realize run
 ```

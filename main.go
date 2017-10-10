@@ -1,31 +1,19 @@
 package main
 
 import (
-	"net/http"
-	"fmt"
-	"io/ioutil"
-	"os"
 	"encoding/json"
+	"fmt"
 	"github.com/labstack/echo"
+	"io/ioutil"
+	"net/http"
+	"os"
 	"os/exec"
 )
 
 func main() {
 	e := echo.New()
-	e.POST("/users", save)
+	e.POST("/v1/projects/:project_id/builds", build)
 	e.Logger.Fatal(e.Start(":1323"))
-}
-
-//MEMO: これは使わない…かな…中身をパースすることはなさそう
-type BuildParams struct {
-	Steps []struct {
-		Name       string   `json:"name"`
-		Env        []string `json:"env"`
-		Args       []string `json:"args"`
-		WaitFor    []string `json:"waitFor"`
-		Entrypoint string   `json:"entrypoint"`
-	} `json:"steps"`
-	LogsBucket string `json:"logsBucket"`
 }
 
 type Response struct {
@@ -36,7 +24,7 @@ type Response struct {
 	} `json:"metadata"`
 }
 
-func save(c echo.Context) error {
+func build(c echo.Context) error {
 	body, _ := ioutil.ReadAll(c.Request().Body)
 	content := []byte(string(body))
 	//TODO: cloudbuild.yamlファイルをワーキングディレクトリに出力する
@@ -48,7 +36,7 @@ func save(c echo.Context) error {
 	jsonResponse := `{"metadata": {"build": {"id": "` + build_id + `"}}}`
 	res := &Response{}
 	err := json.Unmarshal([]byte(jsonResponse), res)
-	if err!=nil {
+	if err != nil {
 		return echo.NewHTTPError(http.StatusUnauthorized, "Please provide valid credentials")
 	}
 
