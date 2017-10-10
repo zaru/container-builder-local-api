@@ -32,6 +32,12 @@
   version = "v0.0.3"
 
 [[projects]]
+  name = "github.com/satori/go.uuid"
+  packages = ["."]
+  revision = "879c5887cd475cd7864858769793b2ceb0d44feb"
+  version = "v1.1.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/syndtr/goleveldb"
   packages = ["leveldb","leveldb/cache","leveldb/comparer","leveldb/errors","leveldb/filter","leveldb/iterator","leveldb/journal","leveldb/memdb","leveldb/opt","leveldb/storage","leveldb/table","leveldb/util"]
@@ -64,6 +70,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "7d4364e6d26de7c9055fb6bc0924032e3d491cd4402a1cabd4d430526c762a8d"
+  inputs-digest = "bbfbb215a005e382016a01e7e52bff823b1c1b1499516248f4d447bcb2537b0c"
   solver-name = "gps-cdcl"
   solver-version = 1
