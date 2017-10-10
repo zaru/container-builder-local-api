@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/labstack/echo"
@@ -35,24 +36,26 @@ func build(c echo.Context) error {
 		return save_err
 	}
 
+	if err := os.MkdirAll("/tmp/gcb-local/"+build_id, 0755); err != nil {
+		fmt.Println(err)
+	}
+
 	body, _ := ioutil.ReadAll(c.Request().Body)
 	content := []byte(string(body))
-	ioutil.WriteFile("/tmp/gcb-local/"+build_id+"/cloudbuild.json", content, os.ModePerm)
+	file_err := ioutil.WriteFile("/tmp/gcb-local/"+build_id+"/cloudbuild.json", content, os.ModePerm)
+	if file_err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "System Error")
+	}
 	fmt.Print(string(body))
 
 	jsonResponse := `{"metadata": {"build": {"id": "` + build_id + `"}}}`
 	res := &Response{}
 	err := json.Unmarshal([]byte(jsonResponse), res)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusUnauthorized, "Please provide valid credentials")
+		return echo.NewHTTPError(http.StatusInternalServerError, "System Error")
 	}
 
-	err = exec.Command("container-builder-local",
-		"--config=/tmp/gcb-local/"+build_id+"/cloudbuild.json",
-		"--dryrun=false", "/tmp/gcb-local/"+build_id).Start()
-	if err != nil {
-		fmt.Println(err)
-	}
+	go gcb_build(build_id)
 
 	return c.JSON(http.StatusCreated, res)
 }
@@ -66,4 +69,25 @@ func save_build_id(build_id string) error {
 	defer db.Close()
 
 	return db.Put([]byte(build_id), []byte("dummy value"), nil)
+}
+
+func gcb_build(build_id string) {
+
+	cmd := exec.Command("container-builder-local",
+		"--config=/tmp/gcb-local/"+build_id+"/cloudbuild.json",
+		"--dryrun=false", "/tmp/gcb-local/"+build_id)
+
+	var stdout bytes.Buffer
+	cmd.Stdout = &stdout
+
+	err := cmd.Start()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	//TODO: save pid
+	fmt.Println("pid: ", cmd.Process.Pid)
+
+	cmd.Wait()
+	fmt.Println(stdout.String())
 }
