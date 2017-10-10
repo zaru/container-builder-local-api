@@ -18,3 +18,4 @@ container-builder-local-api.iml
 
 vendor/
 db/
+dist/
