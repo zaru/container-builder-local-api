@@ -15,4 +15,4 @@ archive:
 release:
   github:
     owner: zaru
-    name: zaru
+    name: container-builder-local-api
