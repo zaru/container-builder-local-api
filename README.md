@@ -2,11 +2,13 @@
 
 GCP container-builder-local REST API mock server.
 
-🚧 This repository is under development.
+### Prerequisites
+
+- [container-builder-local](https://github.com/GoogleCloudPlatform/container-builder-local)
 
 ### Installation
 
-[Download binary](https://github.com/zaru/container-builder-local-api/releases)
+- [Download binary](https://github.com/zaru/container-builder-local-api/releases)
 
 ### Usage
 
