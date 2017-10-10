@@ -3,15 +3,9 @@
 
 [[projects]]
   branch = "master"
-  name = "github.com/MichaelTJones/walk"
+  name = "github.com/golang/snappy"
   packages = ["."]
-  revision = "4748e29d5718c2df4028a6543edf86fd8cc0f881"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/howeyc/gopass"
-  packages = ["."]
-  revision = "bf9dde6d0d2c004a008c27aaee91170c786f6db8"
+  revision = "553a641470496b2327abcac10b36396bd98e45c9"
 
 [[projects]]
   name = "github.com/labstack/echo"
@@ -39,33 +33,9 @@
 
 [[projects]]
   branch = "master"
-  name = "github.com/mgutz/ansi"
-  packages = ["."]
-  revision = "9520e82c474b0a04dd04f8a40959027271bab992"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/mgutz/minimist"
-  packages = ["."]
-  revision = "39eb8cf573ca29344bd7d7e6ba4d7febdebd37a9"
-
-[[projects]]
-  name = "github.com/mgutz/str"
-  packages = ["."]
-  revision = "968bf66e3da857419e4f6e71b2d5c9ae95682dc4"
-  version = "v1.2.0"
-
-[[projects]]
-  name = "github.com/mgutz/to"
-  packages = ["."]
-  revision = "00c06406c2dd2e011f153a6502a21473676db33f"
-  version = "v1.0.0"
-
-[[projects]]
-  name = "github.com/nozzle/throttler"
-  packages = ["."]
-  revision = "d9b45f19996c645d38c9266d1f5cf1990e930119"
-  version = "v1.0"
+  name = "github.com/syndtr/goleveldb"
+  packages = ["leveldb","leveldb/cache","leveldb/comparer","leveldb/errors","leveldb/filter","leveldb/iterator","leveldb/journal","leveldb/memdb","leveldb/opt","leveldb/storage","leveldb/table","leveldb/util"]
+  revision = "b89cc31ef7977104127d34c1bd31ebd1a9db2199"
 
 [[projects]]
   branch = "master"
@@ -82,24 +52,18 @@
 [[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
-  packages = ["acme","acme/autocert","ssh/terminal"]
+  packages = ["acme","acme/autocert"]
   revision = "9419663f5a44be8b34ca85f08abc5fe1be11f8a3"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
-  packages = ["unix","windows"]
+  packages = ["unix"]
   revision = "314a259e304ff91bd6985da2a7149bbf91237993"
-
-[[projects]]
-  name = "gopkg.in/godo.v2"
-  packages = [".","glob","util","watcher","watcher/fswatch"]
-  revision = "b5fd2f0bef1ebe832e628cfad18ab1cc707f65a1"
-  version = "v2.0.9"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "809284591370e7ab03a0596a692193505852246b8b5ec5d715c633e2adaadf2c"
+  inputs-digest = "7d4364e6d26de7c9055fb6bc0924032e3d491cd4402a1cabd4d430526c762a8d"
   solver-name = "gps-cdcl"
   solver-version = 1
