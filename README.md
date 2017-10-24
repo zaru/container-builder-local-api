@@ -16,6 +16,12 @@ GCP container-builder-local REST API mock server.
 ./container-builder-local-api
 ```
 
+#### Option
+
+|key|value|
+|---|---|
+|port|1323 (default)|
+
 #### Create builds
 
 ```
