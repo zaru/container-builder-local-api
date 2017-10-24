@@ -67,10 +67,9 @@ func save_build_id(build_id string) error {
 
 func gcb_build(build_id string) {
 
-	//cmd := exec.Command("container-builder-local",
-	//	"--config=/tmp/gcb-local/"+build_id+"/cloudbuild.json",
-	//	"--dryrun=false", "/tmp/gcb-local/"+build_id)
-	cmd := exec.Command("echo", build_id)
+	cmd := exec.Command("container-builder-local",
+		"--config=/tmp/gcb-local/"+build_id+"/cloudbuild.json",
+		"--dryrun=false", "/tmp/gcb-local/"+build_id)
 
 	var stdout bytes.Buffer
 	cmd.Stdout = &stdout
@@ -84,5 +83,14 @@ func gcb_build(build_id string) {
 	fmt.Println("pid: ", cmd.Process.Pid)
 
 	cmd.Wait()
-	fmt.Println(stdout.String())
+
+	log := stdout.String()
+	output_log(log, build_id)
+	fmt.Println(log)
+
+}
+
+func output_log(log, build_id string) error {
+	content := []byte(log)
+	return ioutil.WriteFile("/tmp/gcb-local/"+build_id+"/result.txt", content, os.ModePerm)
 }
